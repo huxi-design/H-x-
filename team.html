@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — Hūxī</title>
+<meta name="description" content="The team behind Hūxī, a furniture and object design studio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --grey: #666666;
+    --line: #DDDDDD;
+    --font: 'JetBrains Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; background: #FFFFFF; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    background-color: var(--bg);
+    background-image: radial-gradient(circle, #C4C4C4 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 200;
+    font-style: normal;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  em, i{ font-style: normal; }
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--ink); color: var(--bg); }
+
+  .wrap{ max-width: 1600px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 100px); }
+
+  /* ---------- BACK NAV ---------- */
+  .back-nav{
+    padding: 28px clamp(24px, 6vw, 100px);
+  }
+  .back-nav a{
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color .2s ease;
+  }
+  .back-nav a:hover{ border-color: var(--ink); }
+
+  /* ---------- CONTENT ---------- */
+  .page{ padding: clamp(24px,6vw,48px) 0 clamp(80px,12vw,140px); }
+  .label{
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 20px;
+  }
+  h2{
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: normal;
+    letter-spacing: 0.01em;
+    margin-bottom: 48px;
+    margin-left: -0.04em;
+  }
+
+  .member-name{ font-size: 24px; margin-bottom: 4px; }
+  .member-role{
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 28px;
+  }
+  .member-edu{
+    display:flex;
+    flex-direction:column;
+    max-width: 640px;
+    margin-bottom: 28px;
+  }
+  .edu-item{
+    display:flex;
+    gap: 24px;
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .edu-year{
+    color: var(--grey);
+    font-size: 12px;
+    min-width: 130px;
+    flex-shrink: 0;
+  }
+  .member-skills{
+    font-size: 12.5px;
+    color: var(--grey);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 600px){
+    .edu-item{ flex-direction:column; gap: 4px; }
+    .edu-year{ min-width:0; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 26px clamp(24px, 6vw, 64px);
+    border-top: 1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+  }
+  footer a:hover{ color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <div class="back-nav">
+    <a href="index.html">← Hūxī</a>
+  </div>
+
+  <section class="page">
+    <div class="wrap">
+      <div class="label">Team</div>
+      <h2>Currently a studio of one.</h2>
+
+      <div class="team-member">
+        <div class="member-name">Francesco Carta</div>
+        <div class="member-role">Founder — Product Designer</div>
+
+        <div class="member-edu">
+          <div class="edu-item">
+            <span class="edu-year">2023 — present</span>
+            <span>MA in Product Design, Accademia Albertina di Belle Arti di Torino</span>
+          </div>
+          <div class="edu-item">
+            <span class="edu-year">2018 — 2023</span>
+            <span>BA in Decoration, Accademia di Belle Arti di Bologna</span>
+          </div>
+        </div>
+
+        <div class="member-skills">Blender · FreeCAD · Inkscape · AutoCAD · Illustrator · InDesign · Photoshop</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="year"></span> Hūxī</span>
+    <a href="index.html">Back to Hūxī ↑</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
