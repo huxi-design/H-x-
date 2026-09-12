@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Hūxī</title>
+<meta name="description" content="About Hūxī, a furniture and object design studio, and the person behind it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --grey: #666666;
+    --line: #DDDDDD;
+    --font: 'JetBrains Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; background: #FFFFFF; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    min-height: 100vh;
+    background-color: var(--bg);
+    background-image: radial-gradient(circle, #C4C4C4 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 200;
+    font-style: normal;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  em, i{ font-style: normal; }
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--ink); color: var(--bg); }
+
+  /* ---------- CUSTOM CURSOR ---------- */
+  .cursor-dot{
+    position: fixed;
+    top: 0; left: 0;
+    width: 16px; height: 16px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width .18s ease, height .18s ease, opacity .18s ease;
+    opacity: 0;
+  }
+  .cursor-dot.active{ opacity: 1; }
+  .cursor-dot.grow{ width: 26px; height: 26px; border-width: 1.5px; }
+  @media (pointer: coarse){ .cursor-dot{ display:none; } }
+  html.has-cursor, html.has-cursor a{ cursor: none; }
+
+  .wrap{ max-width: 1600px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 100px); }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px clamp(24px, 6vw, 100px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{ font-size: 16px; letter-spacing: 0.02em; }
+  header nav{ display:flex; gap: 28px; }
+  header nav a{
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color .2s ease;
+  }
+  header nav a:hover, header nav a.current{ border-color: var(--ink); }
+
+  .lang-switch{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    margin-left: 24px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+  .lang-switch button{
+    background:none;
+    border:none;
+    font-family: var(--font);
+    font-size: 12px;
+    color: var(--grey);
+    padding: 0;
+    border-bottom: 1px solid transparent;
+  }
+  .lang-switch button.active{ color: var(--ink); border-color: var(--ink); }
+  .lang-switch span{ color: var(--line); }
+
+  /* ---------- CONTENT ---------- */
+  section.page{ padding: clamp(56px,9vw,100px) 0; }
+  .label{
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 20px;
+  }
+  h2{
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: normal;
+    letter-spacing: 0.01em;
+    margin-bottom: 36px;
+    margin-left: -0.04em;
+  }
+  .about-text p{
+    max-width: 68ch;
+    font-size: 16px;
+    margin-bottom: 18px;
+  }
+  .traits{
+    margin-top: 48px;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .trait{ border-top: 1px solid var(--line); padding-top: 16px; }
+  .trait .num{ font-size: 12px; color: var(--grey); }
+  .trait h3{ font-size: 15px; font-weight: normal; margin: 8px 0 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .trait p{ font-size: 13.5px; color: var(--grey); }
+
+  .reveal{
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in-view{ opacity: 1; transform: translateY(0); }
+
+  .dim-divider{ width: 100%; height: 20px; display:block; }
+  .dim-divider line{ stroke: var(--line); stroke-width: 1; }
+
+  /* ---------- TEAM ---------- */
+  .member-name{ font-size: 24px; margin-bottom: 4px; }
+  .member-role{
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 28px;
+  }
+  .member-edu{
+    display:flex;
+    flex-direction:column;
+    max-width: 640px;
+    margin-bottom: 28px;
+  }
+  .edu-item{
+    display:flex;
+    gap: 24px;
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding: 14px 0;
+  }
+  .edu-year{ color: var(--grey); font-size: 12px; min-width: 130px; flex-shrink: 0; }
+  .member-skills{
+    font-size: 12.5px;
+    color: var(--grey);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 600px){
+    .edu-item{ flex-direction:column; gap: 4px; }
+    .edu-year{ min-width:0; }
+    .traits{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-links{ display:flex; flex-direction:column; margin-top: 8px; }
+  .contact-links a{
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    display:flex;
+    justify-content:space-between;
+    transition: opacity .2s ease;
+  }
+  .contact-links a:first-child{ border-top: 1px solid var(--line); }
+  .contact-links a:hover{ opacity: 0.5; }
+  .contact-links .arrow{ color: var(--grey); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 26px clamp(24px, 6vw, 64px);
+    border-top: 1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+  }
+  footer a:hover{ color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Hūxī</a>
+      <nav>
+        <a href="about.html" class="current" data-en="About" data-it="Chi siamo">About</a>
+        <div class="lang-switch">
+          <button data-lang="en" class="active">EN</button>
+          <span>/</span>
+          <button data-lang="it">IT</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page" id="about">
+    <div class="wrap">
+      <div class="label reveal" data-en="About" data-it="Chi siamo">About</div>
+      <div class="about-text">
+        <p class="reveal" data-en="Hūxī is a product design studio working in interior design — seating, work surfaces and custom furniture." data-it="Hūxī è uno studio di product design attivo nella progettazione di interni — sedute, piani da lavoro e arredo su misura.">Hūxī is a product design studio working in interior design — seating, work surfaces and custom furniture.</p>
+        <p class="reveal" data-en="Our work is defined by a clean, clear design language that still tries to step outside the margins. We believe the beauty of an object comes from the beauty of the idea as it is developed on the ground, step by step, through the making." data-it="Il nostro lavoro è contraddistinto da un linguaggio progettuale pulito e chiaro, che cerca comunque di uscire fuori dai margini. Crediamo che la bellezza di un oggetto derivi dalla bellezza dell'idea sviluppata sul campo, passo dopo passo, durante la lavorazione.">Our work is defined by a clean, clear design language that still tries to step outside the margins. We believe the beauty of an object comes from the beauty of the idea as it is developed on the ground, step by step, through the making.</p>
+        <p class="reveal" data-en="Building an object can take months. The care lives in that time — until the result carries whoever lives with it into their own ideal space." data-it="Realizzare un oggetto può richiedere mesi. La cura vive in quel tempo — fino a un risultato che porta chi lo vive nel proprio spazio ideale.">Building an object can take months. The care lives in that time — until the result carries whoever lives with it into their own ideal space.</p>
+      </div>
+
+      <div class="traits">
+        <div class="trait reveal">
+          <div class="num">01</div>
+          <h3 data-en="Clean design" data-it="Design pulito">Clean design</h3>
+          <p data-en="Essential forms, nothing superfluous." data-it="Forme essenziali, senza nulla di superfluo.">Essential forms, nothing superfluous.</p>
+        </div>
+        <div class="trait reveal">
+          <div class="num">02</div>
+          <h3 data-en="Past the margin" data-it="Fuori dai margini">Past the margin</h3>
+          <p data-en="Every project looks for an unexpected angle." data-it="Ogni progetto cerca un punto di vista inaspettato.">Every project looks for an unexpected angle.</p>
+        </div>
+        <div class="trait reveal">
+          <div class="num">03</div>
+          <h3 data-en="Slow process, steady care" data-it="Processo lento, cura costante">Slow process, steady care</h3>
+          <p data-en="Months of making toward a considered result." data-it="Mesi di lavorazione verso un risultato ponderato.">Months of making toward a considered result.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="dim-divider" viewBox="0 0 1000 20" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="0" y1="10" x2="1000" y2="10"/>
+    <line x1="0" y1="4" x2="0" y2="16"/>
+    <line x1="1000" y1="4" x2="1000" y2="16"/>
+  </svg>
+
+  <section class="page" id="team">
+    <div class="wrap">
+      <div class="label reveal">Team</div>
+
+      <div class="team-member reveal">
+        <div class="member-name">Francesco Carta</div>
+        <div class="member-role" data-en="Founder — Product Designer" data-it="Fondatore — Product Designer">Founder — Product Designer</div>
+
+        <div class="member-edu">
+          <div class="edu-item">
+            <span class="edu-year" data-en="2023 — present" data-it="2023 — oggi">2023 — present</span>
+            <span data-en="MA in Product Design, Accademia Albertina di Belle Arti di Torino" data-it="Laurea magistrale in Product Design, Accademia Albertina di Belle Arti di Torino">MA in Product Design, Accademia Albertina di Belle Arti di Torino</span>
+          </div>
+          <div class="edu-item">
+            <span class="edu-year">2018 — 2023</span>
+            <span data-en="BA in Decoration, Accademia di Belle Arti di Bologna" data-it="Laurea triennale in Decorazione, Accademia di Belle Arti di Bologna">BA in Decoration, Accademia di Belle Arti di Bologna</span>
+          </div>
+        </div>
+
+        <div class="member-skills">Blender · FreeCAD · Inkscape · AutoCAD · Illustrator · InDesign · Photoshop</div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="dim-divider" viewBox="0 0 1000 20" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="0" y1="10" x2="1000" y2="10"/>
+    <line x1="0" y1="4" x2="0" y2="16"/>
+    <line x1="1000" y1="4" x2="1000" y2="16"/>
+  </svg>
+
+  <section class="page" id="contact">
+    <div class="wrap">
+      <div class="label reveal" data-en="Contact" data-it="Contatti">Contact</div>
+
+      <div class="contact-links">
+        <a class="reveal" id="emailLink" href="#"><span id="emailText">Email</span><span class="arrow">↗</span></a>
+        <a class="reveal" href="https://www.instagram.com/francesco.carta.99/" target="_blank" rel="noopener"><span>Instagram</span><span class="arrow">↗</span></a>
+        <a class="reveal" href="https://www.linkedin.com/in/francesco-carta-446736193/" target="_blank" rel="noopener"><span>LinkedIn</span><span class="arrow">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="year"></span> Hūxī</span>
+    <a href="index.html" data-en="Work" data-it="Lavori">Work</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (function(){
+      const user = 'huxi.design';
+      const domain = 'protonmail.com';
+      const address = user + '@' + domain;
+      const link = document.getElementById('emailLink');
+      const text = document.getElementById('emailText');
+      if (link && text) {
+        link.href = 'mailto:' + address;
+        text.textContent = 'Email — ' + address;
+      }
+    })();
+
+    // Language toggle
+    (function(){
+      const buttons = document.querySelectorAll('.lang-switch button');
+      const nodes = document.querySelectorAll('[data-en]');
+      function applyLang(lang){
+        nodes.forEach(el => { el.textContent = el.getAttribute('data-' + lang); });
+        buttons.forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+        document.documentElement.lang = lang;
+        localStorage.setItem('huxiLang', lang);
+      }
+      buttons.forEach(b => b.addEventListener('click', () => applyLang(b.getAttribute('data-lang'))));
+      applyLang(localStorage.getItem('huxiLang') || 'en');
+    })();
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('in-view');
+          else entry.target.classList.remove('in-view');
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(el => io.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('in-view'));
+    }
+
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.documentElement.classList.add('has-cursor');
+      const dot = document.getElementById('cursorDot');
+      let x = window.innerWidth / 2, y = window.innerHeight / 2;
+      let tx = x, ty = y;
+      dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`;
+
+      window.addEventListener('mousemove', (e) => {
+        tx = e.clientX; ty = e.clientY;
+        dot.classList.add('active');
+      });
+
+      function loop(){
+        x += (tx - x) * 0.2;
+        y += (ty - y) * 0.2;
+        dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`;
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      document.querySelectorAll('a').forEach(el => {
+        el.addEventListener('mouseenter', () => dot.classList.add('grow'));
+        el.addEventListener('mouseleave', () => dot.classList.remove('grow'));
+      });
+
+      document.addEventListener('mouseleave', () => dot.classList.remove('active'));
+    }
+  </script>
+
+</body>
+</html>

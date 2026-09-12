@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hūxī — Furniture & Object Design Studio</title>
+<meta name="description" content="Hūxī — a furniture and object design studio working in interior design: seating, work surfaces and custom furniture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --grey: #666666;
+    --line: #DDDDDD;
+    --font: 'JetBrains Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; background: #FFFFFF; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    min-height: 100vh;
+    background-color: var(--bg);
+    background-image: radial-gradient(circle, #C4C4C4 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 200;
+    font-style: normal;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  em, i{ font-style: normal; }
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--ink); color: var(--bg); }
+
+  /* ---------- CUSTOM CURSOR ---------- */
+  .cursor-dot{
+    position: fixed;
+    top: 0; left: 0;
+    width: 16px; height: 16px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width .18s ease, height .18s ease, opacity .18s ease;
+    opacity: 0;
+  }
+  .cursor-dot.active{ opacity: 1; }
+  .cursor-dot.grow{ width: 26px; height: 26px; border-width: 1.5px; }
+  @media (pointer: coarse){ .cursor-dot{ display:none; } }
+  html.has-cursor, html.has-cursor a{ cursor: none; }
+
+  .wrap{ max-width: 1600px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 100px); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    height: 100vh;
+    min-height: 420px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position: relative;
+  }
+  .hero-name{
+    font-size: clamp(48px, 12vw, 140px);
+    font-weight: normal;
+    letter-spacing: 0.02em;
+    display:flex;
+  }
+  .hero-name span{
+    display:inline-block;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: rise 0.7s ease forwards;
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+  .hero-tag{
+    margin-top: 20px;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--grey);
+    opacity: 0;
+    animation: fadein 1s ease forwards 1.1s;
+  }
+  @keyframes fadein{ to{ opacity:1; } }
+  .scroll-cue{
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey);
+    opacity: 0;
+    animation: fadein 1s ease forwards 1.8s;
+  }
+  .scroll-cue .arrow{
+    width: 1px;
+    height: 26px;
+    background: var(--grey);
+    position: relative;
+    animation: bob 1.8s ease-in-out infinite;
+  }
+  .scroll-cue .arrow::after{
+    content:"";
+    position:absolute;
+    bottom:0; left:50%;
+    width:6px; height:6px;
+    border-right:1px solid var(--grey);
+    border-bottom:1px solid var(--grey);
+    transform: translateX(-50%) rotate(45deg);
+  }
+  @keyframes bob{ 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(6px); } }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  header.visible{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .nav-inner{
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px clamp(24px, 6vw, 100px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-size: 16px;
+    letter-spacing: 0.02em;
+  }
+  header nav{
+    display:flex;
+    gap: 28px;
+  }
+  header nav a{
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color .2s ease;
+  }
+  header nav a:hover{ border-color: var(--ink); }
+
+  .lang-switch{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    margin-left: 24px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+  .lang-switch button{
+    background:none;
+    border:none;
+    font-family: var(--font);
+    font-size: 12px;
+    color: var(--grey);
+    padding: 0;
+    border-bottom: 1px solid transparent;
+  }
+  .lang-switch button.active{ color: var(--ink); border-color: var(--ink); }
+  .lang-switch span{ color: var(--line); }
+
+  /* ---------- WORK INDEX ---------- */
+  .work-intro{
+    padding: clamp(40px,7vw,72px) 0 clamp(16px,3vw,24px);
+  }
+  .work-intro .label{
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .work-row{
+    border-top: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    gap: clamp(20px, 4vw, 56px);
+    min-height: 26vh;
+    padding: clamp(24px,4vw,40px) 0;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .work-row.in-view{ opacity:1; transform: translateY(0); }
+  .work-list{ border-bottom: 1px solid var(--line); }
+
+  .work-num{
+    font-size: 14px;
+    color: var(--grey);
+    min-width: 44px;
+    flex-shrink: 0;
+  }
+  .work-title{
+    font-size: clamp(28px, 5vw, 56px);
+    font-weight: normal;
+    letter-spacing: 0.01em;
+    flex-grow: 1;
+    transition: opacity .2s ease;
+  }
+  .work-row:hover .work-title{ opacity: 0.45; }
+  .work-status{
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 700px){
+    .work-row{ flex-wrap: wrap; min-height: 0; gap: 8px 20px; }
+    .work-status{ width: 100%; padding-left: 44px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 26px clamp(24px, 6vw, 64px);
+    border-top: 1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+  }
+  footer a:hover{ color: var(--ink); }
+</style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <header id="siteHeader">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Hūxī</a>
+      <nav>
+        <a href="about.html" data-en="About" data-it="Chi siamo">About</a>
+        <div class="lang-switch">
+          <button data-lang="en" class="active">EN</button>
+          <span>/</span>
+          <button data-lang="it">IT</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1 class="hero-name" aria-label="Hūxī">
+      <span style="animation-delay:0.05s">H</span><span style="animation-delay:0.12s">ū</span><span style="animation-delay:0.19s">x</span><span style="animation-delay:0.26s">ī</span>
+    </h1>
+    <p class="hero-tag" data-en="Furniture & Object Design Studio" data-it="Studio di Design di Mobili e Oggetti">Furniture & Object Design Studio</p>
+    <a href="#work" class="scroll-cue" aria-label="Scroll down">
+      <span data-en="Scroll" data-it="Scorri">Scroll</span>
+      <span class="arrow"></span>
+    </a>
+  </section>
+
+  <main class="wrap">
+
+    <div class="work-intro" id="work">
+      <span class="label" data-en="Work" data-it="Lavori">Work</span>
+    </div>
+
+    <div class="work-list">
+      <div class="work-row">
+        <span class="work-num">01</span>
+        <h2 class="work-title" data-en="Project name" data-it="Nome del progetto">Project name</h2>
+        <span class="work-status" data-en="Coming soon" data-it="Prossimamente">Coming soon</span>
+      </div>
+      <div class="work-row">
+        <span class="work-num">02</span>
+        <h2 class="work-title" data-en="Project name" data-it="Nome del progetto">Project name</h2>
+        <span class="work-status" data-en="Coming soon" data-it="Prossimamente">Coming soon</span>
+      </div>
+      <div class="work-row">
+        <span class="work-num">03</span>
+        <h2 class="work-title" data-en="Project name" data-it="Nome del progetto">Project name</h2>
+        <span class="work-status" data-en="Coming soon" data-it="Prossimamente">Coming soon</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> Hūxī</span>
+    <a href="about.html" data-en="About" data-it="Chi siamo">About</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Language toggle
+    (function(){
+      const buttons = document.querySelectorAll('.lang-switch button');
+      const nodes = document.querySelectorAll('[data-en]');
+      function applyLang(lang){
+        nodes.forEach(el => { el.textContent = el.getAttribute('data-' + lang); });
+        buttons.forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+        document.documentElement.lang = lang;
+        localStorage.setItem('huxiLang', lang);
+      }
+      buttons.forEach(b => b.addEventListener('click', () => applyLang(b.getAttribute('data-lang'))));
+      applyLang(localStorage.getItem('huxiLang') || 'en');
+    })();
+
+    const siteHeader = document.getElementById('siteHeader');
+    const headerTrigger = window.innerHeight * 0.6;
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > headerTrigger) {
+        siteHeader.classList.add('visible');
+      } else {
+        siteHeader.classList.remove('visible');
+      }
+    }, { passive: true });
+
+    // Scroll reveal for work rows
+    const rows = document.querySelectorAll('.work-row');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('in-view');
+          else entry.target.classList.remove('in-view');
+        });
+      }, { threshold: 0.15 });
+      rows.forEach(el => io.observe(el));
+    } else {
+      rows.forEach(el => el.classList.add('in-view'));
+    }
+
+    // Custom cursor (mouse devices only)
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.documentElement.classList.add('has-cursor');
+      const dot = document.getElementById('cursorDot');
+      let x = window.innerWidth / 2, y = window.innerHeight / 2;
+      let tx = x, ty = y;
+      dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`;
+
+      window.addEventListener('mousemove', (e) => {
+        tx = e.clientX; ty = e.clientY;
+        dot.classList.add('active');
+      });
+
+      function loop(){
+        x += (tx - x) * 0.2;
+        y += (ty - y) * 0.2;
+        dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`;
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      document.querySelectorAll('a').forEach(el => {
+        el.addEventListener('mouseenter', () => dot.classList.add('grow'));
+        el.addEventListener('mouseleave', () => dot.classList.remove('grow'));
+      });
+
+      document.addEventListener('mouseleave', () => dot.classList.remove('active'));
+    }
+  </script>
+
+</body>
+</html>
