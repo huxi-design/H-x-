@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Hūxī</title>
+<meta name="description" content="About Hūxī — a furniture and object design studio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#FFFFFF; --ink:#000000; --grey:#666666; --line:#DDDDDD; --font:'Source Sans 3', 'Source Sans Pro', 'Noto Sans CJK JP', sans-serif; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; background:#FFFFFF; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; } }
+  body{ min-height:100vh; background-color:var(--bg); color:var(--ink); font-family:var(--font); font-weight:400; line-height:1.7; -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--ink); color:var(--bg); }
+  .cursor-dot{ position:fixed; top:0; left:0; width:16px; height:16px; border:1px solid var(--ink); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .18s ease, height .18s ease, opacity .18s ease; opacity:0; }
+  .cursor-dot.active{ opacity:1; }
+  .cursor-dot.grow{ width:26px; height:26px; border-width:1.5px; }
+  @media (pointer: coarse){ .cursor-dot{ display:none; } }
+  html.has-cursor, html.has-cursor a{ cursor:none; }
+  .wrap{ max-width:1600px; margin:0 auto; padding:0 clamp(24px, 6vw, 100px); }
+  header{ position:sticky; top:0; z-index:50; background:#FFFFFF; border-bottom:1px solid var(--line); }
+  .nav-inner{ max-width:1600px; margin:0 auto; padding:20px clamp(24px, 6vw, 100px); display:flex; align-items:center; justify-content:space-between; }
+  .logo{ font-size:16px; letter-spacing:0.02em; }
+  header nav{ display:flex; align-items:center; gap:28px; }
+  header nav a{ font-size:13px; letter-spacing:0.08em; text-transform:uppercase; border-bottom:1px solid transparent; padding-bottom:2px; transition:border-color .2s ease; }
+  header nav a:hover{ border-color:var(--ink); }
+  .lang-switch{ display:flex; align-items:center; gap:8px; margin-left:24px; font-size:12px; letter-spacing:0.05em; }
+  .lang-switch button{ background:none; border:none; font-family:var(--font); font-size:12px; color:var(--grey); padding:0; border-bottom:1px solid transparent; }
+  .lang-switch button.active{ color:var(--ink); border-color:var(--ink); }
+  .lang-switch span{ color:var(--line); }
+  section.page{ padding:clamp(56px,10vw,120px) 0; }
+  .label{ font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--grey); margin-bottom:20px; }
+  h1{ font-size:clamp(40px, 7vw, 84px); font-weight:normal; letter-spacing:0.01em; margin-bottom:36px; margin-left:-0.04em; }
+  .proj-desc{ max-width:68ch; font-size:16px; }
+  .proj-image{ margin-top:48px; max-width:640px; }
+  .proj-image img{ width:100%; height:auto; display:block; }
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  footer{ padding:26px clamp(24px, 6vw, 64px); border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:11px; letter-spacing:0.05em; color:var(--grey); }
+  footer a:hover{ color:var(--ink); }
+  /* margini ridotti */
+  .wrap{ max-width:none !important; padding:0 clamp(12px, 1.8vw, 28px) !important; }
+  .nav-inner{ max-width:none !important; padding:16px clamp(12px, 1.8vw, 28px) !important; }
+  footer{ padding:18px clamp(12px, 1.8vw, 28px) !important; }
+  section.page{ padding:clamp(32px, 5vw, 64px) 0 !important; }
+  .work-grid{ gap:12px !important; }
+  .work-intro{ padding:clamp(20px, 3vw, 36px) 0 clamp(10px, 1.5vw, 16px) !important; }
+  .proj-spec{ display:grid; grid-template-columns:max-content 1fr; gap:10px 32px; margin-top:48px; max-width:900px; font-size:14px; border-top:1px solid var(--line); padding-top:24px; }
+  .proj-spec dt{ color:var(--grey); text-transform:uppercase; letter-spacing:0.08em; font-size:12px; padding-top:2px; }
+  .proj-section{ margin-top:80px; }
+  .proj-section h2{ font-size:12px; font-weight:normal; letter-spacing:0.2em; text-transform:uppercase; color:var(--grey); margin-bottom:24px; padding-top:16px; border-top:1px solid var(--line); }
+  .proj-gallery{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .proj-gallery figure{ margin:0; }
+  .proj-gallery figure.wide{ grid-column:1 / -1; }
+  .proj-gallery figure.center{ grid-column:1 / -1; max-width:640px; width:100%; margin:0 auto; }
+  .proj-gallery img{ width:100%; height:auto; display:block; background:#fff; }
+  .proj-gallery figcaption{ font-size:11px; letter-spacing:0.06em; color:var(--grey); padding-top:10px; }
+  .proj-text p{ max-width:68ch; font-size:16px; margin-bottom:18px; }
+  .soon{ margin-top:72px; padding:56px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); text-align:center; font-size:clamp(28px,4vw,44px); letter-spacing:0.12em; text-transform:uppercase; }
+  .soon small{ display:block; font-size:12px; letter-spacing:0.2em; color:var(--grey); margin-top:14px; }
+  .team{ display:grid; grid-template-columns:max-content 1fr; gap:8px 40px; max-width:900px; }
+  .team .who{ font-size:18px; }
+  .team .role{ font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--grey); margin-top:4px; }
+  .team ul{ list-style:none; font-size:14px; }
+  .team li{ margin-bottom:6px; }
+  .contact a{ border-bottom:1px solid var(--ink); }
+  .contact p{ margin-bottom:10px; font-size:16px; }
+  @media (max-width:700px){ .proj-gallery{ grid-template-columns:1fr; } .proj-spec,.team{ grid-template-columns:1fr; gap:2px; } .proj-spec dd{ margin-bottom:12px; } }
+</style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+  <header>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Hūxī</a>
+      <nav>
+        <a href="index.html#work" data-en="Work" data-it="Lavori">Work</a>
+        <a href="about.html" data-en="About" data-it="Chi siamo">About</a>
+        <div class="lang-switch">
+          <button data-lang="en" class="active">EN</button>
+          <span>/</span>
+          <button data-lang="it">IT</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page">
+    <div class="wrap">
+      <div class="label reveal" data-en="About" data-it="Chi siamo">About</div>
+      <h1 class="reveal">Hūxī</h1>
+      <p class="proj-desc reveal" data-en="Hūxī is a furniture and object design studio founded by Francesco Carta. The name comes from the Chinese 呼吸, hūxī, which means breath." data-it="Hūxī è uno studio di design di mobili e oggetti fondato da Francesco Carta. Il nome viene dal cinese 呼吸, hūxī, che significa respiro.">Hūxī is a furniture and object design studio founded by Francesco Carta. The name comes from the Chinese 呼吸, hūxī, which means breath.</p>
+      <div class="proj-section"><h2 class="reveal" data-en="Studio" data-it="Studio">Studio</h2><div class="proj-text"><p class="reveal" data-en="Breath is the rhythm the studio looks for in every project: objects that leave room, that slow things down, that help people inhabit a space with more presence." data-it="Il respiro è il ritmo che lo studio cerca in ogni progetto: oggetti che lasciano spazio, che rallentano, che aiutano ad abitare un luogo con più presenza.">Breath is the rhythm the studio looks for in every project: objects that leave room, that slow things down, that help people inhabit a space with more presence.</p><p class="reveal" data-en="We design seating, work surfaces and furniture with a clean, essential language, starting from the idea and developing it in the field, with constant attention to materials and to the way things are made." data-it="Progettiamo sedute, piani da lavoro e arredi con un linguaggio pulito ed essenziale, partendo dall'idea e sviluppandola sul campo, con un'attenzione costante ai materiali e al modo in cui le cose vengono fatte.">We design seating, work surfaces and furniture with a clean, essential language, starting from the idea and developing it in the field, with constant attention to materials and to the way things are made.</p></div></div><div class="proj-section"><h2 class="reveal" data-en="Team" data-it="Team">Team</h2><div class="team reveal"><div><div class="who">Francesco Carta</div><div class="role" data-en="Founder, product designer" data-it="Fondatore, product designer">Founder, product designer</div></div>
+<ul>
+<li data-en="Born in Sardinia, a land he keeps a deep bond with." data-it="Nato in Sardegna, terra con cui mantiene un legame profondo.">Born in Sardinia, a land he keeps a deep bond with.</li>
+<li data-en="Master's degree in Product Design — Accademia Albertina di Belle Arti, Turin (2023–2026)" data-it="Laurea magistrale in Product Design — Accademia Albertina di Belle Arti di Torino (2023–2026)">Master's degree in Product Design — Accademia Albertina di Belle Arti, Turin (2023–2026)</li>
+<li data-en="Bachelor's degree in Decoration — Accademia di Belle Arti di Bologna (2018–2023)" data-it="Laurea triennale in Decorazione — Accademia di Belle Arti di Bologna (2018–2023)">Bachelor's degree in Decoration — Accademia di Belle Arti di Bologna (2018–2023)</li>
+</ul></div></div><div class="proj-section"><h2 class="reveal" data-en="Contact" data-it="Contatti">Contact</h2><div class="contact reveal"><p><a href="mailto:huxi.design@protonmail.com">huxi.design@protonmail.com</a></p></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="year"></span> Hūxī</span>
+    <a href="index.html#work" data-en="← Work" data-it="← Lavori">← Work</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (function(){
+      const buttons = document.querySelectorAll('.lang-switch button');
+      const nodes = document.querySelectorAll('[data-en]');
+      function applyLang(lang){
+        nodes.forEach(el => { el.textContent = el.getAttribute('data-' + lang); });
+        buttons.forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === lang));
+        document.documentElement.lang = lang;
+        localStorage.setItem('huxiLang', lang);
+      }
+      buttons.forEach(b => b.addEventListener('click', () => applyLang(b.getAttribute('data-lang'))));
+      applyLang(localStorage.getItem('huxiLang') || 'en');
+    })();
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('in-view');
+          else entry.target.classList.remove('in-view');
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(el => io.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('in-view'));
+    }
+
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.documentElement.classList.add('has-cursor');
+      const dot = document.getElementById('cursorDot');
+      let x = window.innerWidth / 2, y = window.innerHeight / 2;
+      let tx = x, ty = y;
+      dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`;
+      window.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; dot.classList.add('active'); });
+      function loop(){ x += (tx - x) * 0.2; y += (ty - y) * 0.2; dot.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }
+      requestAnimationFrame(loop);
+      document.querySelectorAll('a').forEach(el => {
+        el.addEventListener('mouseenter', () => dot.classList.add('grow'));
+        el.addEventListener('mouseleave', () => dot.classList.remove('grow'));
+      });
+      document.addEventListener('mouseleave', () => dot.classList.remove('active'));
+    }
+  </script>
+
+</body>
+</html>
